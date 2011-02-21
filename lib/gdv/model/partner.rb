@@ -22,6 +22,6 @@ module GDV::Model
 
         property :kdnr_vu,  :address, 2, 8
 
-        property :geburtsort, :address, 4, 9
+        property :geburtsort, :address, 5, 9
     end
 end
