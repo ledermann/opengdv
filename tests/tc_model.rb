@@ -64,9 +64,9 @@ class TestModel < Test::Unit::TestCase
         assert_equal(Date.civil(2005,1,1), c.renewal)
 
         kfz = c.sparte
-        assert_equal("VW", kfz.make)
-        assert_equal('1J (GOLF IV 1.9 TDI SYNCR', kfz.model)
-        assert_equal(0, kfz.price)
+        assert_equal("VW", kfz.herstellername)
+        assert_equal('1J (GOLF IV 1.9 TDI SYNCR', kfz.modellname)
+        assert_equal(0, kfz.neupreis_in_we)
 
         assert_not_nil kfz.haft
         assert_equal("R8", kfz.haft.regionalklasse)
@@ -137,9 +137,9 @@ class TestModel < Test::Unit::TestCase
         assert_equal(Date.civil(2005,1,1), c.renewal)
 
         kfz = c.sparte
-        assert_equal("VW", kfz.make)
-        assert_equal('1J (GOLF IV 1.9 TDI SYNCR', kfz.model)
-        assert_equal(0, kfz.price)
+        assert_equal("VW", kfz.herstellername)
+        assert_equal('1J (GOLF IV 1.9 TDI SYNCR', kfz.modellname)
+        assert_equal(0, kfz.neupreis_in_we)
 
         assert_not_nil kfz.haft
         assert_equal("R8", kfz.haft.regionalklasse)
