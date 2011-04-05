@@ -33,13 +33,59 @@ module GDV::Model::Sparte
         class Baustein < TeilSparte; end
 
         class Haft < TeilSparte
-            property :regionalklasse, :specific, 1, 11
-            property :sfs,            :specific,  1, 15
+            # Satzart: 0220.051, Teildatensatz 1
+            property :kh_beginn,                                             :specific, 1, 8
+            property :kh_ausschluss,                                         :specific, 1, 9
+            property :kh_aenderungsdat,                                      :specific, 1,10
+            property :kh_tarifgruppe,                                        :specific, 1,11
+            property :kh_deckungsart,                                        :specific, 1,12
+            property :kh_deckungssummen,                                     :specific, 1,13 
+            property :kh_rgj,                                                :specific, 1,14 
+            property :kh_sf_s_klasse,                                        :specific, 1,15
+            property :kh_beitragssaetze,                                     :specific, 1,16
+            property :kh_beitrag_in_we,                                      :specific, 1,17
+            property :kh_zuschlaege_in_proz,                                 :specific, 1,18
+            property :kh_abschlaege_in_proz,                                 :specific, 1,19
+            property :kh_zuschlaege_in_we,                                   :specific, 1,20
+            property :kh_abschlaege_in_we,                                   :specific, 1,21
+            property :flottenrabatt_in_proz,                                 :specific, 1,22
+            property :gueltige_akb,                                          :specific, 1,23
+            property :provision,                                             :specific, 1,24
+            property :kh_schaeden_aus_rueckstufung,                          :specific, 1,25
+            property :kennzeichen_abweichende_provision,                     :specific, 1,26
+            property :tarifbeitrag100_proz_kraftfahrt_haftpflicht_in_we,     :specific, 1,27
+            property :schutzbrief_verkehrsservice,                           :specific, 1,28
+            property :referenz_nr,                                           :specific, 1,29
+            property :frei_vereinbarte_selbstbeteiligung_in_we_kh,           :specific, 1,30
+            property :tyklasse_kh,                                           :specific, 1,31
+            property :tarif,                                                 :specific, 1,32
+            property :lfd_nr,                                                :specific, 1,33
+            property :personen_nr_lfd_nr,                                    :specific, 1,34
+            
+            # Satzart: 0220.051, Teildatensatz 2
+            property :produktkennung,                                        :specific, 2, 8
+            property :versicherte_gefahren,                                  :specific, 2, 9
+            property :selbstbeteiligung_in_proz,                             :specific, 2,10
+            property :selbstbeteiligung_in_we_mind,                          :specific, 2,11
+            property :selbstbeteiligung_in_we_max,                           :specific, 2,12
+            property :geltungsbereich,                                       :specific, 2,13
+            property :geltungsbereicheinschraenkung,                         :specific, 2,14
 
-            def beitrag
-                return addl[1][9] if addl
-                specific[1][17]
-            end
+            # Satzart: 0221.051
+            property :eur_kh_deckungssummen_in_we,                           :addl, 1, 8
+            property :eur_kh_beitrag_in_we,                                  :addl, 1, 9
+            property :eur_kh_zuschlaege_in_we,                               :addl, 1,10
+            property :eur_kh_abschlaege_in_we,                               :addl, 1,11
+            property :eur_tarifbeitrag100_proz_kraftfahrt_haftpflicht_in_we, :addl, 1,12
+            property :eur_frei_vereinbarte_selbstbeteiligung_in_we_kh,       :addl, 1,13
+            
+            # Use value from 'addl', if exists. Otherweise, use from 'specific'
+            def deckungssummen_in_we;                     addl ? eur_kh_deckungssummen_in_we                               : kh_deckungssummen;                                 end
+            def beitrag_in_we;                            addl ? eur_kh_beitrag_in_we                                      : kh_beitrag_in_we;                                  end
+            def zuschlaege_in_we;                         addl ? eur_kh_zuschlaege_in_we                                   : kh_zuschlaege_in_we;                               end
+            def abschlaege_in_we;                         addl ? eur_kh_abschlaege_in_we                                   : kh_abschlaege_in_we;                               end
+            def tarifbeitrag100_proz_in_we;               addl ? eur_tarifbeitrag100_proz_kraftfahrt_haftpflicht_in_we     : tarifbeitrag100_proz_kraftfahrt_haftpflicht_in_we; end
+            def frei_vereinbarte_selbstbeteiligung_in_we; addl ? eur_frei_vereinbarte_selbstbeteiligung_in_we_kh           : frei_vereinbarte_selbstbeteiligung_in_we_kh;       end
         end
 
         class Voll < TeilSparte
