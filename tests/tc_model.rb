@@ -145,6 +145,10 @@ class TestModel < Test::Unit::TestCase
         assert_equal("R8", kfz.haft.kh_tarifgruppe)
         assert_equal("1/2", kfz.haft.kh_sf_s_klasse)
         assert_equal(866.87, kfz.haft.beitrag_in_we)
+        
+        assert_equal(50000000.00, kfz.haft.deckungssumme_personen)
+        assert_equal(50000000.00, kfz.haft.deckungssumme_sach)
+        assert_equal(50000000.00, kfz.haft.deckungssumme_vermoegen)
 
         assert_not_nil kfz.teil
         assert_equal("22", kfz.teil.typkl)

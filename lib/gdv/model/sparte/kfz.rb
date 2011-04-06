@@ -80,12 +80,24 @@ module GDV::Model::Sparte
             property :eur_frei_vereinbarte_selbstbeteiligung_in_we_kh,       :addl, 1,13
             
             # Use value from 'addl', if exists. Otherweise, use from 'specific'
-            def deckungssummen_in_we;                     addl ? eur_kh_deckungssummen_in_we                               : kh_deckungssummen;                                 end
             def beitrag_in_we;                            addl ? eur_kh_beitrag_in_we                                      : kh_beitrag_in_we;                                  end
             def zuschlaege_in_we;                         addl ? eur_kh_zuschlaege_in_we                                   : kh_zuschlaege_in_we;                               end
             def abschlaege_in_we;                         addl ? eur_kh_abschlaege_in_we                                   : kh_abschlaege_in_we;                               end
             def tarifbeitrag100_proz_in_we;               addl ? eur_tarifbeitrag100_proz_kraftfahrt_haftpflicht_in_we     : tarifbeitrag100_proz_kraftfahrt_haftpflicht_in_we; end
             def frei_vereinbarte_selbstbeteiligung_in_we; addl ? eur_frei_vereinbarte_selbstbeteiligung_in_we_kh           : frei_vereinbarte_selbstbeteiligung_in_we_kh;       end
+            
+            # 3-in-1, split them
+            def deckungssumme_personen
+              addl ? eur_kh_deckungssummen_in_we_raw[ 0..13].to_i / 100 : kh_deckungssummen_raw[ 0.. 8].to_i
+            end
+            def deckungssumme_sach
+              result = addl ? eur_kh_deckungssummen_in_we_raw[14..27].to_i / 100 : kh_deckungssummen_raw[ 9..17].to_i
+              result.zero? ? deckungssumme_personen : result
+            end
+            def deckungssumme_vermoegen
+              result = addl ? eur_kh_deckungssummen_in_we_raw[28..41].to_i / 100 : kh_deckungssummen_raw[18..26].to_i
+              result.zero? ? deckungssumme_sach : result
+            end
         end
 
         class Voll < TeilSparte
