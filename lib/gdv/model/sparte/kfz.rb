@@ -80,11 +80,11 @@ module GDV::Model::Sparte
             property :eur_frei_vereinbarte_selbstbeteiligung_in_we_kh,       :addl, 1,13
             
             # Use value from 'addl', if exists. Otherweise, use from 'specific'
-            def beitrag_in_we;                            addl ? eur_kh_beitrag_in_we                                      : kh_beitrag_in_we;                                  end
-            def zuschlaege_in_we;                         addl ? eur_kh_zuschlaege_in_we                                   : kh_zuschlaege_in_we;                               end
-            def abschlaege_in_we;                         addl ? eur_kh_abschlaege_in_we                                   : kh_abschlaege_in_we;                               end
-            def tarifbeitrag100_proz_in_we;               addl ? eur_tarifbeitrag100_proz_kraftfahrt_haftpflicht_in_we     : tarifbeitrag100_proz_kraftfahrt_haftpflicht_in_we; end
-            def frei_vereinbarte_selbstbeteiligung_in_we; addl ? eur_frei_vereinbarte_selbstbeteiligung_in_we_kh           : frei_vereinbarte_selbstbeteiligung_in_we_kh;       end
+            def kh_beitrag_in_we;                                  addl ? addl[1][ 9] : specific[1][17] end
+            def kh_zuschlaege_in_we;                               addl ? addl[1][10] : specific[1][20] end
+            def kh_abschlaege_in_we;                               addl ? addl[1][11] : specific[1][21] end
+            def tarifbeitrag100_proz_kraftfahrt_haftpflicht_in_we; addl ? addl[1][12] : specific[1][27] end
+            def frei_vereinbarte_selbstbeteiligung_in_we_kh;       addl ? addl[1][13] : specific[1][30] end
             
             # 3-in-1, split them
             def deckungssumme_personen
@@ -150,11 +150,11 @@ module GDV::Model::Sparte
             property :eur_personen_nr_lfd_nr,                                  :addl, 1,15
           
             # Use value from 'addl', if exists. Otherweise, use from 'specific'
-            def beitrag_in_we;                            addl ? eur_kft_beitrag_in_we                                  : kft_beitrag_in_we;                                  end
-            def zuschlaege_in_we;                         addl ? eur_kft_zuschlaege_in_we                               : kft_zuschlaege_in_we;                               end
-            def abschlaege_in_we;                         addl ? eur_kft_abschlaege_in_we                               : kft_abschlaege_in_we;                               end
-            def frei_vereinbarte_selbstbeteiligung_in_we; addl ? eur_frei_vereinbarte_selbstbeteiligung_in_we_teikasko  : frei_vereinbarte_selbstbeteiligung_in_we_teikasko;  end
-            def tarifbeitrag100_proz_in_we;               addl ? eur_tarifbeitrag100_proz_kraftfahrt_fahrzeugteil_in_we : tarifbeitrag100_proz_kraftfahrt_fahrzeugteil_in_we; end
+            def kft_beitrag_in_we;                                  addl ? addl[1][ 8] : specific[1][13] end
+            def kft_zuschlaege_in_we;                               addl ? addl[1][ 9] : specific[1][16] end
+            def kft_abschlaege_in_we;                               addl ? addl[1][10] : specific[1][17] end
+            def frei_vereinbarte_selbstbeteiligung_in_we_teilkasko; addl ? addl[1][11] : specific[1][22] end
+            def tarifbeitrag100_proz_kraftfahrt_fahrzeugteil_in_we; addl ? addl[1][12] : specific[1][24] end
         end
 
         class Unfall < TeilSparte
@@ -246,10 +246,14 @@ module GDV::Model::Sparte
         property :staerkeeinheit,                                     :details, 2, 35
         
         # Satzart: 0211.050
-        # property :neupreis_in_we,                                     :addl,    1,  8
-        # property :mehrwert_in_we,                                     :addl,    1,  9
-        # property :referenz_nr,                                        :addl,    1, 10
-        # property :lfd_nr,                                             :addl,    1, 11
-        # property :personen_kunden_nr_versicherers,                    :addl,    1, 12
+        property :eur_neupreis_in_we,                                 :addl,    1,  8
+        property :eur_mehrwert_in_we,                                 :addl,    1,  9
+        property :eur_referenz_nr,                                    :addl,    1, 10
+        property :eur_lfd_nr,                                         :addl,    1, 11
+        property :eur_personen_kunden_nr_versicherers,                :addl,    1, 12
+        
+        # Use value from 'addl', if exists. Otherweise, use from 'details'
+        def neupreis_in_we; addl ? addl[1][8] : details[1][17]; end
+        def mehrwert_in_we; addl ? addl[1][9] : details[1][18]; end
     end
 end

@@ -71,12 +71,12 @@ class TestModel < Test::Unit::TestCase
         assert_not_nil kfz.haft
         assert_equal("R8", kfz.haft.kh_tarifgruppe)
         assert_equal("1/2", kfz.haft.kh_sf_s_klasse)
-        assert_equal(866.87, kfz.haft.beitrag_in_we)
+        assert_equal(866.87, kfz.haft.kh_beitrag_in_we)
 
         assert_not_nil kfz.teil
         assert_equal("R8", kfz.teil.kft_tarifgruppe)
         assert_equal("22", kfz.teil.typklasse_kft)
-        assert_equal(173.58, kfz.teil.beitrag_in_we)
+        assert_equal(173.58, kfz.teil.kft_beitrag_in_we)
 
         assert_not_nil kfz.unfall
         assert_equal("1", kfz.unfall.deckung1_raw)
@@ -145,7 +145,7 @@ class TestModel < Test::Unit::TestCase
         assert_not_nil kfz.haft
         assert_equal("R8", kfz.haft.kh_tarifgruppe)
         assert_equal("1/2", kfz.haft.kh_sf_s_klasse)
-        assert_equal(866.87, kfz.haft.beitrag_in_we)
+        assert_equal(866.87, kfz.haft.kh_beitrag_in_we)
         
         assert_equal(50000000.00, kfz.haft.deckungssumme_personen)
         assert_equal(50000000.00, kfz.haft.deckungssumme_sach)
@@ -154,7 +154,7 @@ class TestModel < Test::Unit::TestCase
         assert_not_nil kfz.teil
         assert_equal("R8", kfz.teil.kft_tarifgruppe)
         assert_equal("22", kfz.teil.typklasse_kft)
-        assert_equal(173.58, kfz.teil.beitrag_in_we)
+        assert_equal(173.58, kfz.teil.kft_beitrag_in_we)
         
         assert_not_nil kfz.unfall
         assert_equal("1", kfz.unfall.deckung1_raw)
