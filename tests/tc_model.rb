@@ -74,8 +74,9 @@ class TestModel < Test::Unit::TestCase
         assert_equal(866.87, kfz.haft.beitrag_in_we)
 
         assert_not_nil kfz.teil
-        assert_equal("22", kfz.teil.typkl)
-        assert_equal(173.58, kfz.teil.beitrag)
+        assert_equal("R8", kfz.teil.kft_tarifgruppe)
+        assert_equal("22", kfz.teil.typklasse_kft)
+        assert_equal(173.58, kfz.teil.beitrag_in_we)
 
         assert_not_nil kfz.unfall
         assert_equal("1", kfz.unfall.deckung1_raw)
@@ -151,9 +152,10 @@ class TestModel < Test::Unit::TestCase
         assert_equal(50000000.00, kfz.haft.deckungssumme_vermoegen)
 
         assert_not_nil kfz.teil
-        assert_equal("22", kfz.teil.typkl)
-        assert_equal(173.58, kfz.teil.beitrag)
-
+        assert_equal("R8", kfz.teil.kft_tarifgruppe)
+        assert_equal("22", kfz.teil.typklasse_kft)
+        assert_equal(173.58, kfz.teil.beitrag_in_we)
+        
         assert_not_nil kfz.unfall
         assert_equal("1", kfz.unfall.deckung1_raw)
         assert_equal(30000.0, kfz.unfall.invaliditaet)

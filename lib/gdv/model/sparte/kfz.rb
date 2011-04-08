@@ -105,12 +105,56 @@ module GDV::Model::Sparte
         end
 
         class Teil < TeilSparte
-            property :typkl, :specific, 1, 21
-            property :beitrag, :addl, 1, 8
-            def beitrag
-                return addl[1][8] if addl
-                specific[1][13]
-            end
+            # Satzart: 0220.053, Teildatensatz 1
+            property :kft_beginn,                                              :specific, 1, 8
+            property :kft_ausschluss,                                          :specific, 1, 9
+            property :kft_aenderungsdat,                                       :specific, 1,10
+            property :kft_tarifgruppe,                                         :specific, 1,11
+            property :kft_deckungsart,                                         :specific, 1,12
+            property :kft_beitrag_in_we,                                       :specific, 1,13
+            property :kft_zuschlaege_in_proz,                                  :specific, 1,14
+            property :kft_abschlaege_in_proz,                                  :specific, 1,15
+            property :kft_zuschlaege_in_we,                                    :specific, 1,16
+            property :kft_abschlaege_in_we,                                    :specific, 1,17
+            property :flottenrabatt_in_proz,                                   :specific, 1,18
+            property :gueltige_akb,                                            :specific, 1,19
+            property :provision,                                               :specific, 1,20
+            property :typklasse_kft,                                           :specific, 1,21
+            property :frei_vereinbarte_selbstbeteiligung_in_we_teilkasko,      :specific, 1,22
+            property :kennzeichen_abweichende_provision,                       :specific, 1,23
+            property :tarifbeitrag100_proz_kraftfahrt_fahrzeugteil_in_we,      :specific, 1,24
+            property :referenz_nr,                                             :specific, 1,25
+            property :tarif,                                                   :specific, 1,26
+            property :lfd_nr,                                                  :specific, 1,27
+            property :personen_nr_lfd_nr,                                      :specific, 1,28
+            property :schutzbrief_verkehrsservice,                             :specific, 1,29
+            property :gap_deckung,                                             :specific, 1,30
+
+            # Satzart: 0220.053, Teildatensatz 2
+            property :produktkennung,                                          :specific, 2, 8
+            property :versicherte_gefahren,                                    :specific, 2, 9
+            property :selbstbeteiligung_in_proz,                               :specific, 2,10
+            property :selbstbeteiligung_in_we_mind,                            :specific, 2,11
+            property :selbstbeteiligung_in_we_max,                             :specific, 2,12
+            property :geltungsbereich,                                         :specific, 2,13
+            property :geltungsbereicheinschraenkung,                           :specific, 2,14
+
+            # Satzart: 0221.053
+            property :eur_kft_beitrag_in_we,                                   :addl, 1, 8
+            property :eur_kft_zuschlaege_in_we,                                :addl, 1, 9
+            property :eur_kft_abschlaege_in_we,                                :addl, 1,10
+            property :eur_frei_vereinbarte_selbstbeteiligung_in_we_teilkasko,  :addl, 1,11
+            property :eur_tarifbeitrag100_proz_kraftfahrt_fahrzeugteil_in_we,  :addl, 1,12
+            property :eur_referenz_nr,                                         :addl, 1,13
+            property :eur_lfd_nr,                                              :addl, 1,14
+            property :eur_personen_nr_lfd_nr,                                  :addl, 1,15
+          
+            # Use value from 'addl', if exists. Otherweise, use from 'specific'
+            def beitrag_in_we;                            addl ? eur_kft_beitrag_in_we                                  : kft_beitrag_in_we;                                  end
+            def zuschlaege_in_we;                         addl ? eur_kft_zuschlaege_in_we                               : kft_zuschlaege_in_we;                               end
+            def abschlaege_in_we;                         addl ? eur_kft_abschlaege_in_we                               : kft_abschlaege_in_we;                               end
+            def frei_vereinbarte_selbstbeteiligung_in_we; addl ? eur_frei_vereinbarte_selbstbeteiligung_in_we_teikasko  : frei_vereinbarte_selbstbeteiligung_in_we_teikasko;  end
+            def tarifbeitrag100_proz_in_we;               addl ? eur_tarifbeitrag100_proz_kraftfahrt_fahrzeugteil_in_we : tarifbeitrag100_proz_kraftfahrt_fahrzeugteil_in_we; end
         end
 
         class Unfall < TeilSparte
