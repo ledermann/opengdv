@@ -295,6 +295,11 @@ module GDV::Format
             end
         end
 
+        # Return the original mapped value of this field, not the override
+        def orig_mapped(record)
+          @map.orig_values[extract(record)] if @map
+        end
+
         def const?
             type == :const
         end
@@ -383,10 +388,17 @@ module GDV::Format
     end
 
     class ValueMap
-        attr_accessor :label, :values
-        def initialize(label, values)
-            @label = label
-            @values = values
+        attr_accessor :label, :values, :orig_values
+
+        def initialize(label, values, override)
+            if override
+                @label = override.label
+                @values = override.values
+            else
+                @label = label
+                @values = values
+            end
+            @orig_values = values
         end
 
         def [](k)
