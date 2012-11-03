@@ -1,4 +1,4 @@
-require 'iconv'
+require 'iconv' unless String.method_defined?(:encode)
 
 module GDV::Format
 
@@ -13,8 +13,12 @@ module GDV::Format
         end
 
         def convert(s)
-            @conv ||= Iconv.new("UTF-8", source)
-            @conv.iconv(s)
+            if String.method_defined?(:encode)
+              s.encode('UTF-8', source)
+            else
+              @conv ||= Iconv.new("UTF-8", source)
+              @conv.iconv(s)
+            end
         end
 
         def self.utf8(source)
